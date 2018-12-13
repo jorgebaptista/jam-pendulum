@@ -621,8 +621,8 @@ PlayerSettings:
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
   cloudProjectId: dcbd43f8-4764-4327-ae1a-9f0eaf5b0653
-  projectName: LD43
-  organizationId: ludum-dare-43-b8339746-295b-4a4e-97d7-bdbe3de428a0
+  projectName: Extra Credits Jam 2018
+  organizationId: extra-credits-jam-2018
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
