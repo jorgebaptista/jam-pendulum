@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2822895514114041072}
   - component: {fileID: 4816131440580058263}
   - component: {fileID: 2822895514114041073}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 591939121
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300016, guid: b2686301b39e2a1498818426c9498226, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -119,7 +119,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 3
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -134,7 +134,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 2822895514114041075}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 391636caf46cb4d4ca03c427b94f40d9, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -157,20 +157,24 @@ MonoBehaviour:
   moveSpeed: 4
   facingRight: 1
   jumpForce: 500
-  dashForce: 500
-  damage: 50
-  attackForce: 600
+  attackDashForce: 700
+  attackShakeForce: 0.5
+  attackShakeDuration: 0.5
+  attackFreezeDuration: 0.2
+  transitDashForce: 400
   futureSelfDuration: 10
-  futureSelfColor: {r: 0.3066038, g: 0.5078249, b: 1, a: 0.4745098}
+  futureSelfColor: {r: 0.2627451, g: 0.80801094, b: 0.98039216, a: 0.4745098}
   afterImageLifeTime: 0.25
   distancePerAfterImage: 0.5
+  dashDrag: 4
+  dashEndCap: 3
   jumpEffectPrefab: {fileID: 1902593461650359043, guid: 4892afe167bcd17449d1d155b8e7c467,
     type: 3}
   feet: {fileID: 6498225163114153110}
   groundCheckRadius: 0.2
   groundLayerMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 768
   attackTrigger: {fileID: 4436763821553388024}
   playerDummyPrefab: {fileID: 1623469963144239682, guid: d17b7b68d47c96f4b9ef2bdb5f14c802,
     type: 3}
@@ -184,7 +188,7 @@ GameObject:
   m_Component:
   - component: {fileID: 650824768225423420}
   - component: {fileID: 4436763821553388024}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Attack Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}

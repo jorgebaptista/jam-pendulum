@@ -97,7 +97,7 @@ public class CameraScript : MonoBehaviour
     }
 
     #region Shake Camera
-    public void ShakeCamera(float duration = 0.5f, float range = 2)
+    public void ShakeCamera(float range = 2, float duration = 0.5f)
     {
         StopAllCoroutines();
         StartCoroutine(DoShake(duration, range));

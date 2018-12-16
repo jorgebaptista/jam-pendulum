@@ -26,18 +26,24 @@ public class PlayerScript : MonoBehaviour
     [SerializeField]
     private float jumpForce = 250f;
 
-    [Space]
-    [SerializeField]
-    private float dashForce = 500;
-
     [Header("Attack")]
     [Space]
     [SerializeField]
-    private float damage = 50f;
+    private float attackDashForce = 500f;
+
+    [Space]
     [SerializeField]
-    private float attackForce = 500;
+    private float attackShakeForce = .5f;
+    [SerializeField]
+    private float attackShakeDuration = .5f;
+    [SerializeField]
+    private float attackFreezeDuration = .3f;
 
     [Header("Future Ability")]
+    [Space]
+    [SerializeField]
+    private float transitDashForce = 500f;
+
     [Space]
     [SerializeField]
     [Tooltip("Duration in seconds")]
@@ -53,6 +59,12 @@ public class PlayerScript : MonoBehaviour
     private float distancePerAfterImage = .5f;
 
     [Header("Settings")]
+    [Space]
+    [SerializeField]
+    private float dashDrag = 6f;
+    [SerializeField]
+    private float dashEndCap = 4f;
+
     [Space]
     [SerializeField]
     private GameObject jumpEffectPrefab;
@@ -73,8 +85,8 @@ public class PlayerScript : MonoBehaviour
     [SerializeField]
     private GameObject playerDummyPrefab;
 
+    private float currentLife;
     private float horizontal;
-    private float gravityValue;
     private float futureSelfTimer;
 
     private int jumpEffectID, playerDummyID, afterImageID;
@@ -87,7 +99,6 @@ public class PlayerScript : MonoBehaviour
 
     private GameObject playerDummy;
 
-    private Vector2 originalGravity;
     private Vector2 playerDummyPosition;
     private Vector2 lastAfterImagePos;
 
@@ -116,8 +127,7 @@ public class PlayerScript : MonoBehaviour
     {
         isAlive = true;
 
-        originalGravity = Physics2D.gravity;
-        gravityValue = originalGravity.y;
+        currentLife = life;
 
         attackTrigger.enabled = false;
 
@@ -132,18 +142,22 @@ public class PlayerScript : MonoBehaviour
         {
             horizontal = Input.GetAxisRaw("Horizontal");
 
-            if (!isDashing && isGrounded && !isAttacking)
+            if (!isDashing)
             {
-                if (Input.GetButtonDown("Jump")) myAnimator.SetTrigger("Jump");
+                if (!isAttacking)
+                {
+                    if (Input.GetButtonDown("Jump") && isGrounded) myAnimator.SetTrigger("Jump");
+                    if (Input.GetButtonDown("Attack"))
+                    {
+                        isAttacking = true;
+                        myAnimator.SetTrigger("Attack");
+                    } 
+                }
+
                 if (Input.GetButtonDown("Transit"))
                 {
-                    if (!isTransiting) TransitToFuture();
-                    else TransitToPresent();
-                }
-                if (Input.GetButtonDown("Attack"))
-                {
-                    isAttacking = true;
-                    myAnimator.SetTrigger("Attack");
+                    if (!isTransiting && isGrounded && !isAttacking) TransitToFuture();
+                    else if (isTransiting) TransitToPresent();
                 }
             }
         }
@@ -164,11 +178,6 @@ public class PlayerScript : MonoBehaviour
               myRigidbody2D.velocity.y);
 
             if (facingRight && horizontal < 0 || !facingRight && horizontal > 0) Flip();
-        }
-        else if (myRigidbody2D.velocity.x * transform.right.x < 0)
-        {
-            isDashing = false;
-            Physics2D.gravity = originalGravity;
         }
 
         if (isTransiting)
@@ -196,7 +205,51 @@ public class PlayerScript : MonoBehaviour
 
             if (Time.time > futureSelfTimer) TransitToPresent();
         }
-    } 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            collision.GetComponent<EnemyScript>().TakeDamage();
+
+            StartCoroutine(DealDamage());
+        }
+    }
+    #endregion
+
+    #region Life
+    public void TakeDamage(float damageAmount, float damageForce, Transform damager = null, bool isDummy = false)
+    {
+        if (isTransiting) futureSelfTimer = -damageAmount;
+        else
+        {
+            if (isDummy) TransitToPresent();
+
+            currentLife -= damageAmount;
+
+            if (currentLife < 0) currentLife = 0;
+
+            //UIManager.UpdateLifeBar(currentLife / life);
+
+            if (currentLife == 0)
+            {
+                Die();
+                return;
+            }
+        }
+
+        myAnimator.SetTrigger("Hurt");
+        StopCoroutine("Dash");
+        StartCoroutine("Dash", damager ? damageForce * damager.right.x : -damageForce * transform.right.x);
+
+        print(currentLife);
+    }
+
+    private void Die()
+    {
+
+    }
     #endregion
 
     #region Movement
@@ -220,21 +273,27 @@ public class PlayerScript : MonoBehaviour
         jumpEffect.SetActive(true);
     }
 
-    private void Dash(float force)
+    private IEnumerator Dash(float force)
     {
         isDashing = true;
 
+        myRigidbody2D.drag = dashDrag;
         myRigidbody2D.velocity = Vector2.zero;
+        myRigidbody2D.AddForce(new Vector2(force, 0));
 
-        Physics2D.gravity = new Vector2(gravityValue * transform.right.x, 0);
-        myRigidbody2D.AddForce(new Vector2(force * transform.right.x, 0));
+        yield return new WaitForSeconds(.1f);
+        yield return new WaitUntil(() => Mathf.Abs(myRigidbody2D.velocity.x) < dashEndCap);
+
+        isDashing = false;
+        myRigidbody2D.drag = 0;
+
     }
     #endregion
 
     #region Attack
     private void Attack()
     {
-        Dash(attackForce);
+        StartCoroutine(Dash(attackDashForce * transform.right.x));
         attackTrigger.enabled = true;
     }
 
@@ -243,15 +302,24 @@ public class PlayerScript : MonoBehaviour
         attackTrigger.enabled = false;
         isAttacking = false;
     }
+
+    private IEnumerator DealDamage()
+    {
+        cameraScript.ShakeCamera(attackShakeForce, attackShakeDuration);
+
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(attackFreezeDuration);
+        Time.timeScale = 1;
+    }
     #endregion
 
     #region Future Self
     private void TransitToFuture()
     {
-        Dash(dashForce);
-
         playerDummy = poolManager.GetCachedPrefab(playerDummyID);
         playerDummy.transform.SetPositionAndRotation(transform.position, transform.rotation);
+        playerDummy.GetComponent<SpriteRenderer>().sprite = mySpriteRenderer.sprite;
+
         dummyIsFacingRight = facingRight;
         playerDummy.SetActive(true);
 
@@ -260,13 +328,19 @@ public class PlayerScript : MonoBehaviour
 
         initialColor = mySpriteRenderer.color;
         mySpriteRenderer.color = futureSelfColor;
+
+        StartCoroutine(Dash(transitDashForce * transform.right.x));
     }
 
     private void TransitToPresent()
     {
         isTransiting = false;
 
+        myAnimator.SetTrigger("Reset");
+        attackTrigger.enabled = false;
+        myRigidbody2D.velocity = Vector2.zero;
         transform.SetPositionAndRotation(playerDummy.transform.position, playerDummy.transform.rotation);
+
         facingRight = dummyIsFacingRight;
         playerDummy.SetActive(false);
 

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - PlayerDummy
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -15,12 +16,12 @@ TagManager:
   - 
   - 
   - Ground
+  - Wall
   - Player
   - Player Attack
   - Player Dummy
   - Enemy
   - Enemy Attack
-  - 
   - 
   - 
   - 
@@ -44,6 +45,9 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Enemy
+    uniqueID: 2882423993
     locked: 0
   - name: Player
     uniqueID: 591939121
