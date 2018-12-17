@@ -7,6 +7,7 @@ public class ParallaxManagerScript : MonoBehaviour
     {
         public Transform backgroundTransform;
         public float parallaxScale;
+        public bool moveY;
     }
 
     [SerializeField]
@@ -38,7 +39,7 @@ public class ParallaxManagerScript : MonoBehaviour
             float backgroundTargetX = background.backgroundTransform.position.x + parallaxX;
             float backgroundTargetY = background.backgroundTransform.position.y + parallaxY;
 
-            Vector3 backgroundTargetPos = new Vector3(backgroundTargetX, backgroundTargetY, background.backgroundTransform.position.z);
+            Vector3 backgroundTargetPos = new Vector3(backgroundTargetX, background.moveY ? backgroundTargetY : background.backgroundTransform.position.y, background.backgroundTransform.position.z);
 
             background.backgroundTransform.position = Vector3.Lerp(background.backgroundTransform.position, backgroundTargetPos, smoothing * Time.deltaTime);
         }

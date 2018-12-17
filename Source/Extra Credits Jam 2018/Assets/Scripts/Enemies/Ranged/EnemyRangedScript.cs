@@ -27,6 +27,13 @@ public class EnemyRangedScript : EnemyScript
     [SerializeField]
     private GameObject bulletPrefab;
 
+    [Header("Audio")]
+    [Space]
+    [SerializeField]
+    private string shootSound = "Enemy_Shoot";
+    [SerializeField]
+    private string bulletHitSound = "Enemy_Bullet_Hit";
+
     private int bulletID;
 
     private float attackTimer;
@@ -76,15 +83,21 @@ public class EnemyRangedScript : EnemyScript
 
     public void Attack(bool toggle)
     {
-        if (toggle)
+        if (isAlive)
         {
-            isAttacking = true;
-            myAnimator.SetTrigger("Attack");
-        }
-        else
-        {
-            isAttacking = false;
-            attackTimer = attackCooldown + Time.time;
+            if (toggle)
+            {
+                isAttacking = true;
+                myAnimator.SetTrigger("Attack");
+
+                StopCoroutine("Flip");
+                waiting = false;
+            }
+            else
+            {
+                isAttacking = false;
+                attackTimer = attackCooldown + Time.time;
+            } 
         }
     }
 
@@ -95,7 +108,9 @@ public class EnemyRangedScript : EnemyScript
         bullet.transform.SetPositionAndRotation(shootPoint.position, transform.rotation);
 
         bullet.SetActive(true);
-        bullet.GetComponent<EnemyBulletScript>().SetStats(damage, damageToFutureSelf, damageForce);
+        bullet.GetComponent<EnemyBulletScript>().SetStats(damage, damageToFutureSelf, damageForce, bulletHitSound);
         bullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(shootForce * transform.right.x, 0));
+
+        audioManager.PlaySound(shootSound, gameObject.name, myAudioSource);
     }
 }

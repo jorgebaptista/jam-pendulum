@@ -29,6 +29,11 @@ public class EnemyMeleeScript : EnemyScript
     [SerializeField]
     private SpriteRenderer spotLight;
 
+    [Header("Audio")]
+    [Space]
+    [SerializeField]
+    private string burnSound = "Enemy_Burn";
+
     private Color initialLightColor;
 
     private PlayerScript playerScript;
@@ -84,6 +89,9 @@ public class EnemyMeleeScript : EnemyScript
 
     private IEnumerator DamagePlayer(bool isDummy = false)
     {
+        audioManager.StopSound(burnSound);
+        audioManager.PlaySound(burnSound, gameObject.name, myAudioSource);
+
         while(true)
         {
             yield return new WaitForSeconds(damageTimer);

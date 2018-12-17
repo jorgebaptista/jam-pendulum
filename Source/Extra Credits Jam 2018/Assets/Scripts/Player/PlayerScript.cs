@@ -92,6 +92,27 @@ public class PlayerScript : MonoBehaviour
     [SerializeField]
     private RuntimeAnimatorController animatorWithWeapon;
 
+    [Header("Audio")]
+    [Space]
+    [SerializeField]
+    private string footstepsSound = "Player_Footsteps";
+    [SerializeField]
+    private string jumpSound = "Player_Jump";
+    [SerializeField]
+    private string landSound = "Player_Land";
+    [SerializeField]
+    private string attackSound = "Player_Attack";
+    [SerializeField]
+    private string futureDashSound = "Player_FutureDash";
+    [SerializeField]
+    private string hurtSound = "Player_Hurt";
+    [SerializeField]
+    private string deathSound = "Player_Death";
+
+    [Space]
+    [SerializeField]
+    private string enemyHitSound = "Enemy_Hit";
+
     private float currentLife;
     private float horizontal;
     private float futureSelfTimer;
@@ -120,6 +141,7 @@ public class PlayerScript : MonoBehaviour
 
     private GameManager gameManager;
     private UIManagerScript uIManager;
+    private AudioManagerScript audioManager;
     private PoolManagerScript poolManager;
     private CameraScript cameraScript;
     #endregion
@@ -134,6 +156,7 @@ public class PlayerScript : MonoBehaviour
 
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponentInChildren<GameManager>();
         uIManager = GameObject.FindGameObjectWithTag("GameController").GetComponentInChildren<UIManagerScript>();
+        audioManager = GameObject.FindGameObjectWithTag("GameController").GetComponentInChildren<AudioManagerScript>();
         poolManager = GameObject.FindGameObjectWithTag("GameController").GetComponentInChildren<PoolManagerScript>();
         cameraScript = Camera.main.GetComponent<CameraScript>();
     }
@@ -226,19 +249,18 @@ public class PlayerScript : MonoBehaviour
 
         if (isAlive && cameraScript.IsOutsideCameraY(transform.position.y))
         {
-            isAlive = false;
-            gameManager.GameOver();
+            if (!isTransiting)
+            {
+                isAlive = false;
+                gameManager.GameOver();
+            }
+            else TransitToPresent();
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
-        {
-            collision.GetComponent<EnemyScript>().TakeDamage();
-
-            StartCoroutine(DealDamage());
-        }
+        if (collision.CompareTag("Enemy")) StartCoroutine(DealDamage(collision.GetComponent<EnemyScript>()));
     }
     #endregion
 
@@ -257,38 +279,51 @@ public class PlayerScript : MonoBehaviour
 
     public void TakeDamage(float damageAmount, float damageToFS,float damageForce, Transform damager = null, bool isDummy = false)
     {
-        if (isTransiting && !isDummy) futureSelfTimer -= damageToFS;
-        else
+        EndAttack();
+
+        if (isAlive)
         {
-            if (isDummy) TransitToPresent();
-
-            currentLife -= damageAmount;
-
-            if (currentLife < 0) currentLife = 0;
-
-            uIManager.UpdateLifeBar(currentLife / life);
-
-            if (currentLife == 0)
+            if (isTransiting && !isDummy) futureSelfTimer -= damageToFS;
+            else
             {
-                StartCoroutine(Die());
-                return;
+                if (isDummy) TransitToPresent();
+
+                currentLife -= damageAmount;
+
+                if (currentLife < 0) currentLife = 0;
+
+                uIManager.UpdateLifeBar(currentLife / life);
+
+                if (currentLife == 0)
+                {
+                    StartCoroutine(Die());
+                    return;
+                }
             }
+            myAnimator.SetTrigger("Hurt");
+            audioManager.PlaySound(hurtSound, name);
+
+            if (damager && (damager.position.x > transform.position.x && !facingRight) || (damager.position.x < transform.position.x && facingRight)) Flip(false);
+
+            StopCoroutine("Dash");
+            StartCoroutine("Dash", -damageForce * transform.right.x); 
         }
-        myAnimator.SetTrigger("Hurt");
-
-        if (damager && (damager.position.x > transform.position.x && !facingRight) || (damager.position.x < transform.position.x && facingRight)) Flip(false);
-
-        StopCoroutine("Dash");
-        StartCoroutine("Dash", -damageForce * transform.right.x);
     }
 
     private IEnumerator Die()
     {
         isAlive = false;
 
-        if (!isGrounded) myAnimator.SetTrigger("Hurt");
+        if (!isGrounded)
+        {
+            myAnimator.SetTrigger("Hurt");
+            audioManager.PlaySound(hurtSound, name);
+        }
         yield return new WaitUntil(() => isGrounded);
+
+        myRigidbody2D.velocity = Vector2.zero;
         myAnimator.SetTrigger("Die");
+        audioManager.PlaySound(deathSound, name);
 
         myRigidbody2D.isKinematic = true;
         myCollider2D.enabled = false;
@@ -314,6 +349,8 @@ public class PlayerScript : MonoBehaviour
         GameObject jumpEffect = poolManager.GetCachedPrefab(jumpEffectID);
         jumpEffect.transform.position = feet.position;
         jumpEffect.SetActive(true);
+
+        audioManager.PlaySound(jumpSound, name);
     }
 
     private IEnumerator Dash(float force)
@@ -338,6 +375,8 @@ public class PlayerScript : MonoBehaviour
     {
         StartCoroutine(Dash(attackDashForce * transform.right.x));
         attackTrigger.enabled = true;
+
+        audioManager.PlaySound(attackSound, name);
     }
 
     public void EndAttack()
@@ -346,13 +385,17 @@ public class PlayerScript : MonoBehaviour
         isAttacking = false;
     }
 
-    private IEnumerator DealDamage()
+    private IEnumerator DealDamage(EnemyScript enemyScript)
     {
+        audioManager.PlaySound(enemyHitSound, name);
+
         cameraScript.ShakeCamera(attackShakeForce, attackShakeDuration);
 
         Time.timeScale = 0;
         yield return new WaitForSecondsRealtime(attackFreezeDuration);
         Time.timeScale = 1;
+
+        enemyScript.TakeDamage();
     }
     #endregion
 
@@ -375,6 +418,8 @@ public class PlayerScript : MonoBehaviour
         gameObject.layer = futureSelfLayerMask;
 
         StartCoroutine(Dash(transitDashForce * transform.right.x));
+
+        audioManager.PlaySound(futureDashSound, name);
     }
 
     private void TransitToPresent()
@@ -410,6 +455,18 @@ public class PlayerScript : MonoBehaviour
 
         afterImageSprite.gameObject.SetActive(false);
         afterImageSprite.color = mySpriteRenderer.color;
+    }
+    #endregion
+
+    #region Audio
+    private void PlayFootstepSound()
+    {
+        audioManager.PlaySound(footstepsSound, name);
+    } 
+
+    public void PlayLandSound()
+    {
+        audioManager.PlaySound(landSound, name);
     }
     #endregion
 

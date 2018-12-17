@@ -16,15 +16,29 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Vector2 initialCheckpoint;
 
+    [Header("Audio")]
+    [Space]
+    [SerializeField]
+    private string mainMusicSound = "Main_Music";
+    [SerializeField]
+    private string gameOverSound = "GameOver";
+
     private bool hasChecked;
 
     private Vector2 lastCheckpointPos;
 
     private PlayerScript playerScript;
+    private AudioManagerScript audioManager;
 
     private void Awake()
     {
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        audioManager = GameObject.FindGameObjectWithTag("GameController").GetComponentInChildren<AudioManagerScript>();
+    }
+
+    private void Start()
+    {
+        audioManager.PlaySound(mainMusicSound, name);
     }
 
     public Vector2 LastCheckpointPos
@@ -44,6 +58,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator RespawnPlayer()
     {
+        audioManager.PlaySound(gameOverSound, name);
+
         yield return new WaitForSeconds(respawnTimer);
 
         playerScript.transform.position = hasChecked ? lastCheckpointPos : initialCheckpoint;

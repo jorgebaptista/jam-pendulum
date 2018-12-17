@@ -21,6 +21,8 @@ public class UIManagerScript : MonoBehaviour
     private float timerBarSpeed = 5f;
 
     //sssssssssssssssssss
+    [Header("Other")]
+    [Space]
     [SerializeField]
     private GameObject fadePrefab;
 

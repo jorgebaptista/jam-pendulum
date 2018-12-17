@@ -159,8 +159,8 @@ MonoBehaviour:
   jumpForce: 500
   attackDashForce: 700
   attackShakeForce: 0.4
-  attackShakeDuration: 0.4
-  attackFreezeDuration: 0.2
+  attackShakeDuration: 0.3
+  attackFreezeDuration: 0.25
   transitDashForce: 400
   futureSelfDuration: 10
   futureSelfColor: {r: 0.2627451, g: 0.80801094, b: 0.98039216, a: 0.4745098}
@@ -180,6 +180,14 @@ MonoBehaviour:
     type: 3}
   futureSelfLayerMask: 15
   animatorWithWeapon: {fileID: 9100000, guid: d68379ea070dca94285bcbdbd8ea6d04, type: 2}
+  footstepsSound: Player_Footsteps
+  jumpSound: Player_Jump
+  landSound: Player_Land
+  attackSound: Player_Attack
+  futureDashSound: Player_FutureDash
+  hurtSound: Player_Hurt
+  deathSound: Player_Death
+  enemyHitSound: Enemy_Hit
 --- !u!1 &7557533907010136693
 GameObject:
   m_ObjectHideFlags: 0
