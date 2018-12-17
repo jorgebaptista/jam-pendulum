@@ -88,8 +88,8 @@ public class EnemyMeleeScript : EnemyScript
         {
             yield return new WaitForSeconds(damageTimer);
 
-            if (!isDummy) playerScript.TakeDamage(damage, damageForce, transform);
-            else playerScript.TakeDamage(damage, damageForce, transform, true);
+            if (!isDummy) playerScript.TakeDamage(damage, damageToFutureSelf, damageForce, transform);
+            else playerScript.TakeDamage(damage, damageToFutureSelf, damageForce, transform, true);
         }
     }
 }

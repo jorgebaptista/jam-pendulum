@@ -84,6 +84,13 @@ public class PlayerScript : MonoBehaviour
     [Space]
     [SerializeField]
     private GameObject playerDummyPrefab;
+    [SerializeField]
+    [Tooltip("Use number of layermask, couldn't find out how to choose layer directly")]
+    private int futureSelfLayerMask = 15;
+
+    [Space]
+    [SerializeField]
+    private RuntimeAnimatorController animatorWithWeapon;
 
     private float currentLife;
     private float horizontal;
@@ -99,6 +106,8 @@ public class PlayerScript : MonoBehaviour
 
     private GameObject playerDummy;
 
+    private LayerMask initialLayerMask;
+
     private Vector2 playerDummyPosition;
     private Vector2 lastAfterImagePos;
 
@@ -107,9 +116,12 @@ public class PlayerScript : MonoBehaviour
     private SpriteRenderer mySpriteRenderer;
     private Animator myAnimator;
     private Rigidbody2D myRigidbody2D;
+    private Collider2D myCollider2D;
 
-    private CameraScript cameraScript;
+    private GameManager gameManager;
+    private UIManagerScript uIManager;
     private PoolManagerScript poolManager;
+    private CameraScript cameraScript;
     #endregion
 
     #region Main
@@ -118,18 +130,23 @@ public class PlayerScript : MonoBehaviour
         mySpriteRenderer = GetComponent<SpriteRenderer>();
         myAnimator = GetComponent<Animator>();
         myRigidbody2D = GetComponent<Rigidbody2D>();
+        myCollider2D = GetComponent<Collider2D>();
 
-        cameraScript = Camera.main.GetComponent<CameraScript>();
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponentInChildren<GameManager>();
+        uIManager = GameObject.FindGameObjectWithTag("GameController").GetComponentInChildren<UIManagerScript>();
         poolManager = GameObject.FindGameObjectWithTag("GameController").GetComponentInChildren<PoolManagerScript>();
+        cameraScript = Camera.main.GetComponent<CameraScript>();
     }
 
     private void Start()
     {
-        isAlive = true;
+        Revive();
 
-        currentLife = life;
+        initialLayerMask = gameObject.layer;
 
-        attackTrigger.enabled = false;
+        myRigidbody2D.interpolation = RigidbodyInterpolation2D.Interpolate;
+
+        uIManager.ToggleTimerBar(false);
 
         jumpEffectID = poolManager.PreCache(jumpEffectPrefab, 1);
         playerDummyID = poolManager.PreCache(playerDummyPrefab, 1);
@@ -147,7 +164,7 @@ public class PlayerScript : MonoBehaviour
                 if (!isAttacking)
                 {
                     if (Input.GetButtonDown("Jump") && isGrounded) myAnimator.SetTrigger("Jump");
-                    if (Input.GetButtonDown("Attack"))
+                    if (!isTransiting && Input.GetButtonDown("Attack"))
                     {
                         isAttacking = true;
                         myAnimator.SetTrigger("Attack");
@@ -204,6 +221,13 @@ public class PlayerScript : MonoBehaviour
             }
 
             if (Time.time > futureSelfTimer) TransitToPresent();
+            else uIManager.UpdateTimerBar(Mathf.Clamp01((futureSelfTimer - Time.time) / futureSelfDuration));
+        }
+
+        if (isAlive && cameraScript.IsOutsideCameraY(transform.position.y))
+        {
+            isAlive = false;
+            gameManager.GameOver();
         }
     }
 
@@ -219,9 +243,21 @@ public class PlayerScript : MonoBehaviour
     #endregion
 
     #region Life
-    public void TakeDamage(float damageAmount, float damageForce, Transform damager = null, bool isDummy = false)
+    public void Revive()
     {
-        if (isTransiting) futureSelfTimer = -damageAmount;
+        isAlive = true;
+        currentLife = life;
+
+        attackTrigger.enabled = false;
+
+        myAnimator.SetTrigger("Reset");
+        myRigidbody2D.isKinematic = false;
+        myCollider2D.enabled = true;
+    }
+
+    public void TakeDamage(float damageAmount, float damageToFS,float damageForce, Transform damager = null, bool isDummy = false)
+    {
+        if (isTransiting && !isDummy) futureSelfTimer -= damageToFS;
         else
         {
             if (isDummy) TransitToPresent();
@@ -230,36 +266,43 @@ public class PlayerScript : MonoBehaviour
 
             if (currentLife < 0) currentLife = 0;
 
-            //UIManager.UpdateLifeBar(currentLife / life);
+            uIManager.UpdateLifeBar(currentLife / life);
 
             if (currentLife == 0)
             {
-                Die();
+                StartCoroutine(Die());
                 return;
             }
         }
-
         myAnimator.SetTrigger("Hurt");
-        StopCoroutine("Dash");
-        StartCoroutine("Dash", damager ? damageForce * damager.right.x : -damageForce * transform.right.x);
 
-        print(currentLife);
+        if (damager && (damager.position.x > transform.position.x && !facingRight) || (damager.position.x < transform.position.x && facingRight)) Flip(false);
+
+        StopCoroutine("Dash");
+        StartCoroutine("Dash", -damageForce * transform.right.x);
     }
 
-    private void Die()
+    private IEnumerator Die()
     {
+        isAlive = false;
 
+        if (!isGrounded) myAnimator.SetTrigger("Hurt");
+        yield return new WaitUntil(() => isGrounded);
+        myAnimator.SetTrigger("Die");
+
+        myRigidbody2D.isKinematic = true;
+        myCollider2D.enabled = false;
     }
     #endregion
 
     #region Movement
-    private void Flip()
+    private void Flip(bool playAnimation = true)
     {
         Vector2 currentEulerAngles = transform.eulerAngles;
         currentEulerAngles.y += 180;
         transform.eulerAngles = currentEulerAngles;
 
-        if (isGrounded) myAnimator.SetTrigger("Turn");
+        if (isGrounded && playAnimation) myAnimator.SetTrigger("Turn");
 
         facingRight = !facingRight;
     }
@@ -319,15 +362,17 @@ public class PlayerScript : MonoBehaviour
         playerDummy = poolManager.GetCachedPrefab(playerDummyID);
         playerDummy.transform.SetPositionAndRotation(transform.position, transform.rotation);
         playerDummy.GetComponent<SpriteRenderer>().sprite = mySpriteRenderer.sprite;
-
         dummyIsFacingRight = facingRight;
         playerDummy.SetActive(true);
 
         futureSelfTimer = Time.time + futureSelfDuration;
+        uIManager.ToggleTimerBar(true);
+
         isTransiting = true;
 
         initialColor = mySpriteRenderer.color;
         mySpriteRenderer.color = futureSelfColor;
+        gameObject.layer = futureSelfLayerMask;
 
         StartCoroutine(Dash(transitDashForce * transform.right.x));
     }
@@ -336,15 +381,18 @@ public class PlayerScript : MonoBehaviour
     {
         isTransiting = false;
 
+        uIManager.ToggleTimerBar(false);
+
         myAnimator.SetTrigger("Reset");
-        attackTrigger.enabled = false;
-        myRigidbody2D.velocity = Vector2.zero;
-        transform.SetPositionAndRotation(playerDummy.transform.position, playerDummy.transform.rotation);
-
-        facingRight = dummyIsFacingRight;
-        playerDummy.SetActive(false);
-
         mySpriteRenderer.color = initialColor;
+        gameObject.layer = initialLayerMask;
+        facingRight = dummyIsFacingRight;
+        attackTrigger.enabled = false;
+
+        transform.SetPositionAndRotation(playerDummy.transform.position, playerDummy.transform.rotation);
+        myRigidbody2D.velocity = Vector2.zero;
+
+        playerDummy.SetActive(false);
     }
 
     private IEnumerator FadeAfterImage(SpriteRenderer afterImageSprite)

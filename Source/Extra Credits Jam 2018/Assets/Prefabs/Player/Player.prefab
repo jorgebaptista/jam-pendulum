@@ -153,13 +153,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6319a691f01ca4d4eb1418c7b6a4e887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 150
+  life: 100
   moveSpeed: 4
   facingRight: 1
   jumpForce: 500
   attackDashForce: 700
-  attackShakeForce: 0.5
-  attackShakeDuration: 0.5
+  attackShakeForce: 0.4
+  attackShakeDuration: 0.4
   attackFreezeDuration: 0.2
   transitDashForce: 400
   futureSelfDuration: 10
@@ -178,6 +178,8 @@ MonoBehaviour:
   attackTrigger: {fileID: 4436763821553388024}
   playerDummyPrefab: {fileID: 1623469963144239682, guid: d17b7b68d47c96f4b9ef2bdb5f14c802,
     type: 3}
+  futureSelfLayerMask: 15
+  animatorWithWeapon: {fileID: 9100000, guid: d68379ea070dca94285bcbdbd8ea6d04, type: 2}
 --- !u!1 &7557533907010136693
 GameObject:
   m_ObjectHideFlags: 0

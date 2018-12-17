@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlayerDummy
   - Enemy
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
@@ -22,8 +23,8 @@ TagManager:
   - Player Dummy
   - Enemy
   - Enemy Attack
-  - 
-  - 
+  - Future Self
+  - Checkpoint
   - 
   - 
   - 

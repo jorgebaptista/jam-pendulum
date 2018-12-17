@@ -48,7 +48,7 @@ public class EnemyRangedScript : EnemyScript
     {
         base.Start();
 
-        bulletID = poolManager.PreCache(bulletPrefab, 3);
+        bulletID = poolManager.PreCache(bulletPrefab, 2);
     }
 
     protected override void FixedUpdate()
@@ -95,7 +95,7 @@ public class EnemyRangedScript : EnemyScript
         bullet.transform.SetPositionAndRotation(shootPoint.position, transform.rotation);
 
         bullet.SetActive(true);
-        bullet.GetComponent<EnemyBulletScript>().SetStats(damage, damageForce);
+        bullet.GetComponent<EnemyBulletScript>().SetStats(damage, damageToFutureSelf, damageForce);
         bullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(shootForce * transform.right.x, 0));
     }
 }

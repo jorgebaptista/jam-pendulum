@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyBulletScript : MonoBehaviour
 {
-    private float damage;
+    private float damage, damageToFutureSelf;
     private float damageForce;
 
     private TrailRenderer myTrailRenderer;
@@ -34,21 +34,22 @@ public class EnemyBulletScript : MonoBehaviour
         {
             playerScript = playerScript ?? collision.GetComponent<PlayerScript>();
 
-            playerScript.TakeDamage(damage, damageForce, transform);
+            playerScript.TakeDamage(damage, damageToFutureSelf, damageForce, transform);
         }
         else if (collision.CompareTag("PlayerDummy"))
         {
             playerScript = playerScript ?? GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
 
-            playerScript.TakeDamage(damage, damageForce, transform, true);
+            playerScript.TakeDamage(damage, damageToFutureSelf, damageForce, transform, true);
         }
 
         gameObject.SetActive(false);
     }
 
-    public void SetStats(float damageAmount, float damageForceAmount)
+    public void SetStats(float damageAmount, float damageToFS, float damageForceAmount)
     {
         damage = damageAmount;
+        damageToFutureSelf = damageToFS;
         damageForce = damageForceAmount;
     }
 }

@@ -35,6 +35,10 @@ public class EnemyScript : MonoBehaviour
     [Header("Settings")]
     [Space]
     [SerializeField]
+    private Sprite deathSprite;
+
+    [Space]
+    [SerializeField]
     private Transform eyes;
 
     [Space]
@@ -117,6 +121,8 @@ public class EnemyScript : MonoBehaviour
         myAnimator.enabled = false;
         myRigidbody2D.isKinematic = true;
         myCollider2D.enabled = false;
+
+        mySpriteRenderer.sprite = deathSprite;
 
         StartCoroutine(FadeOut());
     }

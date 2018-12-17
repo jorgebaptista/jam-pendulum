@@ -39,8 +39,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1332404363817558259}
-  - component: {fileID: 1332404363817558257}
   - component: {fileID: 1332404363817558256}
+  - component: {fileID: 1332404363817558257}
   - component: {fileID: 5989814173959668678}
   - component: {fileID: 991020071582631074}
   - component: {fileID: 1332404363817558258}
@@ -67,25 +67,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1332404363817558257
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1332404363817558270}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 31d6973dce867bf4180e42b6a66402b6, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!212 &1332404363817558256
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -134,6 +115,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1332404363817558257
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332404363817558270}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 31d6973dce867bf4180e42b6a66402b6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!50 &5989814173959668678
 Rigidbody2D:
   serializedVersion: 4
@@ -196,8 +196,9 @@ MonoBehaviour:
   dieFadeTime: 1
   moveSpeed: 1.5
   flipTimer: 2
-  damage: 20
-  damageToFutureSelf: 5
+  damage: 25
+  damageToFutureSelf: 3
+  deathSprite: {fileID: 21300000, guid: eb4a4ade3d7c3644b90b849bdf5afd7d, type: 3}
   eyes: {fileID: 6270893399834006306}
   groundCheck: {fileID: 247360434181208793}
   groundLayerMask:
@@ -209,7 +210,7 @@ MonoBehaviour:
   playerCheck: {fileID: 1525708220604668208}
   playerLayerMask:
     serializedVersion: 2
-    m_Bits: 5120
+    m_Bits: 37888
   shootForce: 250
   damageForce: 250
   attackCooldown: 2.5
