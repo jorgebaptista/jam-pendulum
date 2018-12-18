@@ -130,7 +130,7 @@ public class EnemyScript : MonoBehaviour
     }
 
     #region Life
-    public void TakeDamage()
+    public virtual void TakeDamage()
     {
         isAlive = false;
 
@@ -160,7 +160,7 @@ public class EnemyScript : MonoBehaviour
             yield return null;
         }
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSecondsRealtime(1f);
 
         gameObject.SetActive(false);
     }

@@ -11,7 +11,6 @@ public class EnemyBulletScript : MonoBehaviour
     private string hitSound = "Enemy_Bullet_Hit";
 
     private TrailRenderer myTrailRenderer;
-    private AudioSource myAudioSource;
 
     private PlayerScript playerScript;
     private AudioManagerScript audioManager;
@@ -19,7 +18,6 @@ public class EnemyBulletScript : MonoBehaviour
     private void Awake()
     {
         myTrailRenderer = GetComponent<TrailRenderer>();
-        myAudioSource = GetComponent<AudioSource>();
 
         audioManager = GameObject.FindGameObjectWithTag("GameController").GetComponentInChildren<AudioManagerScript>();
     }
@@ -44,7 +42,7 @@ public class EnemyBulletScript : MonoBehaviour
 
             playerScript.TakeDamage(damage, damageToFutureSelf, damageForce, transform);
 
-            audioManager.PlaySound(hitSound, gameObject.name, myAudioSource);
+            audioManager.PlaySound(hitSound, gameObject.name);
         }
         else if (collision.CompareTag("PlayerDummy"))
         {
@@ -52,7 +50,7 @@ public class EnemyBulletScript : MonoBehaviour
 
             playerScript.TakeDamage(damage, damageToFutureSelf, damageForce, transform, true);
 
-            audioManager.PlaySound(hitSound, gameObject.name, myAudioSource);
+            audioManager.PlaySound(hitSound, gameObject.name);
         }
 
         gameObject.SetActive(false);

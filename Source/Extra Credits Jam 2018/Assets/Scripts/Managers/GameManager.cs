@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        audioManager.PlaySound(mainMusicSound, name);
+        //audioManager.PlaySound(mainMusicSound, name);
     }
 
     public Vector2 LastCheckpointPos

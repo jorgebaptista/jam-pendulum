@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1377763632096821195}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8, y: -2.5, z: 0}
+  m_LocalPosition: {x: 8, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3279810658878620459}
@@ -136,7 +136,7 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 5.1753154, y: -0.9390265}
-      - {x: 3.0998063, y: -2.128107}
+      - {x: 1.0864425, y: -2.5435634}
       - {x: 0.67908144, y: 1.5070398}
 --- !u!1 &1490357127697412741
 GameObject:
@@ -263,7 +263,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 4
+  MinDistance: 6.7832522
   MaxDistance: 30
   Pan2D: 0
   rolloffMode: 2
@@ -419,8 +419,8 @@ MonoBehaviour:
   dieFadeTime: 1
   moveSpeed: 1
   flipTimer: 2
-  damage: 5
-  damageToFutureSelf: 1
+  damage: 10
+  damageToFutureSelf: 3
   deathSprite: {fileID: 21300000, guid: 5f41e3d37036e7243acea41ac152722f, type: 3}
   eyes: {fileID: 3279810658878620459}
   groundCheck: {fileID: 2846588728118837806}
@@ -429,7 +429,7 @@ MonoBehaviour:
     m_Bits: 256
   wallLayerMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 262656
   playerCheck: {fileID: 4438756571588224479}
   playerLayerMask:
     serializedVersion: 2
@@ -467,7 +467,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5674608583888422495}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: -3, z: 0}
+  m_LocalPosition: {x: 4, y: -4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3279810658878620459}
@@ -497,7 +497,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7271485004360164968}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.7, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4438756571588224479}

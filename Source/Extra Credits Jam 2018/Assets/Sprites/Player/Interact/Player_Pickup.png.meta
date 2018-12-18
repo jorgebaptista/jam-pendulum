@@ -6,6 +6,10 @@ TextureImporter:
     21300002: main_char_pickup_1
     21300004: main_char_pickup_2
     21300006: main_char_pickup_3
+    21300008: Player_Pickup_0
+    21300010: Player_Pickup_1
+    21300012: Player_Pickup_2
+    21300014: Player_Pickup_3
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -49,7 +53,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 14
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -95,11 +99,22 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: main_char_pickup_0
+      name: Player_Pickup_0
       rect:
         serializedVersion: 2
         x: 0
@@ -113,13 +128,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 25d4e8b5ce3a5c243837140c9bd57c1c
+      spriteID: 623bbf46157dbe64b8b4d7172b527747
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main_char_pickup_1
+      name: Player_Pickup_1
       rect:
         serializedVersion: 2
         x: 42
@@ -133,13 +148,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 18f45ac636800484a83eb388aecd2cd9
+      spriteID: ea4e09661cfa1e44d8ede03ad6d25e64
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main_char_pickup_2
+      name: Player_Pickup_2
       rect:
         serializedVersion: 2
         x: 0
@@ -153,13 +168,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7dbf8bee19c82e9428859341aacf5b7b
+      spriteID: 980495fcb4bb31443b7bd22f511e8766
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main_char_pickup_3
+      name: Player_Pickup_3
       rect:
         serializedVersion: 2
         x: 42
@@ -173,7 +188,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 690142064024be64d9f99f0c45c0494c
+      spriteID: 27af5b16070d1b245a5d74a63326de4d
       vertices: []
       indices: 
       edges: []

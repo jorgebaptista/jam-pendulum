@@ -79,6 +79,12 @@ public class PlayerScript : MonoBehaviour
 
     [Space]
     [SerializeField]
+    private float interactTriggerRadius = 1f;
+    [SerializeField]
+    private LayerMask interactableLayer;
+
+    [Space]
+    [SerializeField]
     private BoxCollider2D attackTrigger;
 
     [Space]
@@ -108,6 +114,10 @@ public class PlayerScript : MonoBehaviour
     private string hurtSound = "Player_Hurt";
     [SerializeField]
     private string deathSound = "Player_Death";
+    [SerializeField]
+    private string healSound = "Player_Heal";
+    [SerializeField]
+    private string receiveSwordSound = "Player_Collect_Sword";
 
     [Space]
     [SerializeField]
@@ -121,7 +131,8 @@ public class PlayerScript : MonoBehaviour
 
     private bool isAlive;
     private bool isGrounded, isDashing;
-    private bool isAttacking;
+    private bool interacting;
+    private bool isArmed, isAttacking;
     private bool isTransiting;
     private bool dummyIsFacingRight;
 
@@ -178,7 +189,7 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
-        if (isAlive)
+        if (isAlive && !interacting)
         {
             horizontal = Input.GetAxisRaw("Horizontal");
 
@@ -186,8 +197,12 @@ public class PlayerScript : MonoBehaviour
             {
                 if (!isAttacking)
                 {
-                    if (Input.GetButtonDown("Jump") && isGrounded) myAnimator.SetTrigger("Jump");
-                    if (!isTransiting && Input.GetButtonDown("Attack"))
+                    if (isGrounded)
+                    {
+                        if (Input.GetButtonDown("Jump")) myAnimator.SetTrigger("Jump");
+                        if (Input.GetButtonDown("Interact")) CheckInteract();
+                    }
+                    if (!isTransiting && isArmed && Input.GetButtonDown("Attack"))
                     {
                         isAttacking = true;
                         myAnimator.SetTrigger("Attack");
@@ -211,6 +226,8 @@ public class PlayerScript : MonoBehaviour
         myAnimator.SetFloat("Vertical", myRigidbody2D.velocity.y);
         myAnimator.SetBool("Grounded", isGrounded);
         myAnimator.SetBool("Dashing", isDashing);
+
+        if (isAlive && !isGrounded && myRigidbody2D.velocity.y > -Physics2D.gravity.y) myRigidbody2D.velocity = new Vector2(myRigidbody2D.velocity.x, -Physics2D.gravity.y);
 
         if (!isDashing && !isAttacking)
         {
@@ -270,6 +287,8 @@ public class PlayerScript : MonoBehaviour
         isAlive = true;
         currentLife = life;
 
+        uIManager.UpdateLifeBar(currentLife / life);
+
         attackTrigger.enabled = false;
 
         myAnimator.SetTrigger("Reset");
@@ -277,7 +296,7 @@ public class PlayerScript : MonoBehaviour
         myCollider2D.enabled = true;
     }
 
-    public void TakeDamage(float damageAmount, float damageToFS,float damageForce, Transform damager = null, bool isDummy = false)
+    public void TakeDamage(float damageAmount, float damageToFS,float damageForce = 150f, Transform damager = null, bool isDummy = false)
     {
         EndAttack();
 
@@ -303,7 +322,7 @@ public class PlayerScript : MonoBehaviour
             myAnimator.SetTrigger("Hurt");
             audioManager.PlaySound(hurtSound, name);
 
-            if (damager && (damager.position.x > transform.position.x && !facingRight) || (damager.position.x < transform.position.x && facingRight)) Flip(false);
+            if (damager && ((damager.position.x > transform.position.x && !facingRight) || (damager.position.x < transform.position.x && facingRight))) Flip(false);
 
             StopCoroutine("Dash");
             StartCoroutine("Dash", -damageForce * transform.right.x); 
@@ -314,18 +333,20 @@ public class PlayerScript : MonoBehaviour
     {
         isAlive = false;
 
+        horizontal = 0;
+
         if (!isGrounded)
         {
             myAnimator.SetTrigger("Hurt");
             audioManager.PlaySound(hurtSound, name);
         }
         yield return new WaitUntil(() => isGrounded);
-
-        myRigidbody2D.velocity = Vector2.zero;
         myAnimator.SetTrigger("Die");
         audioManager.PlaySound(deathSound, name);
 
         myRigidbody2D.isKinematic = true;
+        myRigidbody2D.velocity = Vector2.zero;
+
         myCollider2D.enabled = false;
     }
     #endregion
@@ -367,6 +388,73 @@ public class PlayerScript : MonoBehaviour
         isDashing = false;
         myRigidbody2D.drag = 0;
 
+    }
+    #endregion
+
+    #region Interact
+    private void CheckInteract()
+    {
+        interacting = true;
+
+        if (Physics2D.OverlapCircle(transform.position, interactTriggerRadius, interactableLayer))
+        {
+            InteractableScript interactableScript = Physics2D.OverlapCircle(transform.position, interactTriggerRadius, interactableLayer).GetComponent<InteractableScript>();
+
+            if (!isTransiting || (isTransiting && interactableScript.CanFSInteract))
+            {
+                if (interactableScript.CanCollect) myAnimator.SetTrigger("Pickup");
+                else myAnimator.SetTrigger("Interact");
+                return;
+            }
+            else interacting = false;
+        }
+
+        interacting = false;
+    }
+
+    private void Interact()
+    {
+        InteractableScript interactableScript = Physics2D.OverlapCircle(transform.position, interactTriggerRadius, interactableLayer).GetComponent<InteractableScript>();
+
+        if (interactableScript)
+        {
+            interactableScript.Interact();
+        }
+        else Debug.LogError("InteractableScript not found.");
+
+        interacting = false;
+    }
+
+    private void Collect()
+    {
+        ChestScript chestScript = Physics2D.OverlapCircle(transform.position, interactTriggerRadius, interactableLayer).GetComponent<ChestScript>();
+
+        if (chestScript)
+        {
+            chestScript.Collect(this);
+        }
+        else Debug.LogError("ChestScript not found.");
+    }
+
+    public void ReceiveSword()
+    {
+        myAnimator.runtimeAnimatorController = animatorWithWeapon;
+
+        audioManager.PlaySound(receiveSwordSound, name);
+
+        interacting = false;
+        isArmed = true;
+    }
+
+    public void Heal(float lifeToAdd)
+    {
+        currentLife += lifeToAdd;
+        if (currentLife > life) currentLife = life;
+        uIManager.UpdateLifeBar(currentLife / life);
+
+        audioManager.PlaySound(healSound, name);
+
+        interacting = false;
     }
     #endregion
 
@@ -427,6 +515,7 @@ public class PlayerScript : MonoBehaviour
         isTransiting = false;
 
         uIManager.ToggleTimerBar(false);
+        uIManager.UpdateTimerBar(1);
 
         myAnimator.SetTrigger("Reset");
         mySpriteRenderer.color = initialColor;
@@ -472,10 +561,24 @@ public class PlayerScript : MonoBehaviour
 
     #region Debug
 #if UNITY_EDITOR
+    [Header("Debug")]
+    [Space]
+    [SerializeField]
+    private bool showGroundCheck = true;
+    [SerializeField]
+    private bool showInteractCheck = true;
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(feet.position, groundCheckRadius);
+        if (showGroundCheck)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(feet.position, groundCheckRadius); 
+        }
+        if(showInteractCheck)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(transform.position, interactTriggerRadius);
+        }
     }
 #endif 
     #endregion

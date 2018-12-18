@@ -175,6 +175,10 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 768
+  interactTriggerRadius: 1
+  interactableLayer:
+    serializedVersion: 2
+    m_Bits: 131072
   attackTrigger: {fileID: 4436763821553388024}
   playerDummyPrefab: {fileID: 1623469963144239682, guid: d17b7b68d47c96f4b9ef2bdb5f14c802,
     type: 3}
@@ -188,6 +192,8 @@ MonoBehaviour:
   hurtSound: Player_Hurt
   deathSound: Player_Death
   enemyHitSound: Enemy_Hit
+  showGroundCheck: 0
+  showInteractCheck: 0
 --- !u!1 &7557533907010136693
 GameObject:
   m_ObjectHideFlags: 0

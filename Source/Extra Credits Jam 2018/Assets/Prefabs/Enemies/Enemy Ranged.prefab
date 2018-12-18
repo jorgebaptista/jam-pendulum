@@ -155,7 +155,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 4
+  MinDistance: 6.869429
   MaxDistance: 30
   Pan2D: 0
   rolloffMode: 2
@@ -321,7 +321,7 @@ MonoBehaviour:
     m_Bits: 256
   wallLayerMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 262656
   playerCheck: {fileID: 1525708220604668208}
   playerLayerMask:
     serializedVersion: 2

@@ -71,20 +71,20 @@ public class EnemyMeleeScript : EnemyScript
         if (collision.CompareTag("Player"))
         {
             playerScript = playerScript ?? collision.GetComponent<PlayerScript>();
-            StopAllCoroutines();
-            StartCoroutine(DamagePlayer());
+            StopCoroutine("DamagePlayer");
+            StartCoroutine("DamagePlayer",false);
         }
         else if (collision.CompareTag("PlayerDummy"))
         {
             playerScript = playerScript ?? GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
-            StopAllCoroutines();
-            StartCoroutine(DamagePlayer(true));
+            StopCoroutine("DamagePlayer");
+            StartCoroutine("DamagePlayer", true);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        StopAllCoroutines();
+        StopCoroutine("DamagePlayer");
     }
 
     private IEnumerator DamagePlayer(bool isDummy = false)
@@ -99,5 +99,12 @@ public class EnemyMeleeScript : EnemyScript
             if (!isDummy) playerScript.TakeDamage(damage, damageToFutureSelf, damageForce, transform);
             else playerScript.TakeDamage(damage, damageToFutureSelf, damageForce, transform, true);
         }
+    }
+
+    public override void TakeDamage()
+    {
+        base.TakeDamage();
+
+        spotLight.gameObject.SetActive(false);
     }
 }

@@ -6,6 +6,10 @@ TextureImporter:
     21300002: main_char_interact_1
     21300004: main_char_interact_2
     21300006: main_char_interact_3
+    21300008: Player_Interact_0
+    21300010: Player_Interact_1
+    21300012: Player_Interact_2
+    21300014: Player_Interact_3
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -49,7 +53,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 14
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -95,11 +99,22 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: main_char_interact_0
+      name: Player_Interact_0
       rect:
         serializedVersion: 2
         x: 0
@@ -113,13 +128,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 721f3b93637eed046932793ac8b229e2
+      spriteID: f33be1ba3defb274db6cb95caef84533
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main_char_interact_1
+      name: Player_Interact_1
       rect:
         serializedVersion: 2
         x: 42
@@ -133,13 +148,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1238301e8ca4b384dae3e69a4b428d90
+      spriteID: ef3fe45b1e3c20e4aaaea3b8e8652a36
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main_char_interact_2
+      name: Player_Interact_2
       rect:
         serializedVersion: 2
         x: 0
@@ -153,13 +168,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3973d0559771cc648b04005183b2c3b1
+      spriteID: cee28c8b53208a24db9e30c1f4a72ed8
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main_char_interact_3
+      name: Player_Interact_3
       rect:
         serializedVersion: 2
         x: 42
@@ -173,7 +188,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0fc5a173fe91f754c83a72a9b9ede0aa
+      spriteID: be302bcd5d74e124aaa943b7634edded
       vertices: []
       indices: 
       edges: []

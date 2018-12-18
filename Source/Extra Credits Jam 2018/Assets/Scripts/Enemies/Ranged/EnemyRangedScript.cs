@@ -68,7 +68,10 @@ public class EnemyRangedScript : EnemyScript
 
             if (isSeeingPlayer)
             {
-                canMove = false;
+                //canMove = false;
+                //StopCoroutine("Flip");
+                myAnimator.enabled = true;
+
                 mySpriteRenderer.color = alertColor;
 
                 if (!isAttacking && Time.time > attackTimer) Attack(true);
@@ -88,9 +91,9 @@ public class EnemyRangedScript : EnemyScript
             if (toggle)
             {
                 isAttacking = true;
+
                 myAnimator.SetTrigger("Attack");
 
-                StopCoroutine("Flip");
                 waiting = false;
             }
             else

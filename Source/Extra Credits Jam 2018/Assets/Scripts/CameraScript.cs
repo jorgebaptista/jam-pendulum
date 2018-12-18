@@ -14,6 +14,10 @@ public class CameraScript : MonoBehaviour
     [SerializeField]
     private float delay = 0.1f;
 
+    [Space]
+    [SerializeField]
+    private float playerOffset = 1f;
+
     private Transform playerTransform;
 
     [Header("Limits")]
@@ -93,7 +97,7 @@ public class CameraScript : MonoBehaviour
         }
 
         transform.position = Vector3.SmoothDamp(transform.position,
-            targetPosition, ref velocity, delay);
+            new Vector3(targetPosition.x, targetPosition.y + playerOffset, targetPosition.z), ref velocity, delay);
     }
 
     #region Shake Camera
@@ -133,6 +137,9 @@ public class CameraScript : MonoBehaviour
     [Tooltip("Settings for the debug rectangle that guide camera limits")]
     float dottedLinesDensity = 5f;
 
+    [SerializeField]
+    private Color linesColor = Color.green;
+
     private void OnDrawGizmosSelected()
     {
         if (useLimits)
@@ -151,7 +158,7 @@ public class CameraScript : MonoBehaviour
                 new Vector2(minLimit.x, maxLimit.y)
             };
 
-            Handles.color = Color.magenta;
+            Handles.color = linesColor;
             Handles.DrawDottedLines(debugLimits, dottedLinesDensity);
         }
     }
