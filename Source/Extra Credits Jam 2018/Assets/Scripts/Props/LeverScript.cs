@@ -17,6 +17,16 @@ public class LeverScript : InteractableScript
     [SerializeField]
     private Sprite activeSprite;
 
+    [Header("Shake Settings")]
+    [Space]
+    [SerializeField]
+    private bool doShake;
+    [SerializeField]
+    private float shakeForce = .2f;
+    [SerializeField]
+    private float shakeDuration = .7f;
+
+    [Header("Audio")]
     [Space]
     [SerializeField]
     private string leverSound = "Lever";
@@ -24,6 +34,15 @@ public class LeverScript : InteractableScript
     private bool active;
 
     private Sprite initialSprite;
+
+    private CameraScript cameraScript;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        cameraScript = Camera.main.GetComponent<CameraScript>();
+    }
 
     private void Start()
     {
@@ -51,5 +70,7 @@ public class LeverScript : InteractableScript
 
         if (activateOnce) myCollider2D.enabled = false;
         else active = !active;
+
+        if (doShake) cameraScript.ShakeCamera(shakeForce, shakeDuration);
     }
 }

@@ -32,25 +32,10 @@ public class MovingPlatformScript : MonoBehaviour, IActivable
     [SerializeField]
     private bool movingA;
 
-    [Space]
-    [SerializeField]
-    private bool doShake;
-    [SerializeField]
-    private float shakeForce = 1f;
-    [SerializeField]
-    private float shakeDuration = 1f;
-
     private Vector2 velocity = Vector2.zero;
 
     private Vector2 realPointA;
     private Vector2 realPointB;
-
-    private CameraScript cameraScript;
-
-    private void Awake()
-    {
-        cameraScript = Camera.main.GetComponent<CameraScript>();
-    }
 
     private void Start()
     {
@@ -91,8 +76,6 @@ public class MovingPlatformScript : MonoBehaviour, IActivable
                 else StartCoroutine(MoveToB());
             }
         }
-
-        if (doShake) cameraScript.ShakeCamera(shakeForce, shakeDuration);
     }
 
     private IEnumerator MoveToA()
