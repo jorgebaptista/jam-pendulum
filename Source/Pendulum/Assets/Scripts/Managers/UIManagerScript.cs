@@ -20,17 +20,6 @@ public class UIManagerScript : MonoBehaviour
     [SerializeField]
     private float timerBarSpeed = 5f;
 
-    //sssssssssssssssssss
-    [Header("Other")]
-    [Space]
-    [SerializeField]
-    private GameObject fadePrefab;
-
-    private void Awake()
-    {
-        fadePrefab.SetActive(true);
-    }
-
     public void UpdateLifeBar(float lifePercentage)
     {
         StopCoroutine("UpdateLifeBarImage");
