@@ -1,4 +1,4 @@
-![Pendulum cover](Promotional/Cover.png "Cover")
+<a href="https://nielisson.itch.io/pendulum" target="_blank" align="center"><img src="Promotional/Cover.png" alt="Pendulum Cover" title="Cover"></a>
 
 <p><br></p>
 <p align="center"><em><strong>What if you could try out a different version of the present moment?
@@ -10,6 +10,8 @@
 Aside from being able to attack the enemies, he can use his other present version to check what is ahead. This will allow the player to "foresee" what can't be seen right ahead, along with helping him solve some puzzles.</p>
 <br>
 <p><em><strong>This game&nbsp;was originally our submission to <a href="https://itch.io/jam/extra-credits-holiday-2018-game-jam" target="_blank">Extra Credits game jam 2018</a> and we decided to keep working on it post jam.</strong></em><br></p>
+<br>
+<h3 align="center">Play Pendulum on Itch.io <a href="https://nielisson.itch.io/pendulum" target="_blank">here</a>.</h3>
 <br>
 <hr>
 <h2>Meet the team</h2>
