@@ -437,7 +437,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -165.5, y: -111.3}
-  m_SizeDelta: {x: 393, y: 74}
+  m_SizeDelta: {x: 347, y: 87}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &740940798
 MonoBehaviour:
@@ -466,10 +466,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: 17e51564f8001244a86b903478b209dd,
+    m_HighlightedSprite: {fileID: 21300000, guid: 7372c25d05958fd4f941d1fba1bcefba,
       type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: c55d93f2ccb05844a941ff6a5229050d, type: 3}
-    m_DisabledSprite: {fileID: 21300000, guid: 1dd58b56c9548af4ea6d8fa9c0a2bb83, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 704f1ae81c9997b4697093f51565ccef, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: 8e003098b61ba7d48bcd6d1a0c84dde1, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -513,7 +513,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 1dd58b56c9548af4ea6d8fa9c0a2bb83, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8e003098b61ba7d48bcd6d1a0c84dde1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5735,7 +5735,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: e1afd6d314b6e0943bb481757430f942, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d5ba2e88d7330e94a90a4e59214515cf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6063,7 +6063,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -165.5, y: -23.800049}
-  m_SizeDelta: {x: 393, y: 74}
+  m_SizeDelta: {x: 347, y: 87}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1576152773
 MonoBehaviour:
@@ -6092,10 +6092,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: c41d335203659824790d384b19e1c22f,
+    m_HighlightedSprite: {fileID: 21300000, guid: 03e19a7671b3b384c9f6386f97e46086,
       type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: ea769f542fdc7e24cb870a8c3b93cd6c, type: 3}
-    m_DisabledSprite: {fileID: 21300000, guid: cbd5d85d8c110424ca78afd8cc939c00, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: f2a992df7201e014f89c31ca073126db, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: b41dfbe40e75b0c408a3995a6ac88d26, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -6161,7 +6161,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: cbd5d85d8c110424ca78afd8cc939c00, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b41dfbe40e75b0c408a3995a6ac88d26, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6447,7 +6447,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1992694174}
   m_LocalRotation: {x: -0.5000001, y: 0.4999999, z: -0.5000001, w: 0.4999999}
-  m_LocalPosition: {x: -7.45, y: -1.44, z: 0}
+  m_LocalPosition: {x: 1.13, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1244489084}
@@ -6471,8 +6471,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: db526fd9bcd9f14459d6693d493fb498, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6510,7 +6510,7 @@ ParticleSystemRenderer:
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -6598,7 +6598,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 25
+      scalar: 16.17
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -6705,7 +6705,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 0.047058824}
+      maxColor: {r: 1, g: 0.706, b: 0.385, a: 0.043137256}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -6767,7 +6767,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 7
+      scalar: 4
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -7032,7 +7032,7 @@ ParticleSystem:
     startRotation:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 0.05061455
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -7082,7 +7082,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    randomizeRotationDirection: 0
+    randomizeRotationDirection: 1
     maxNumParticles: 1015
     size3D: 0
     rotation3D: 0
@@ -7966,7 +7966,7 @@ ParticleSystem:
     flipU: 0
     flipV: 0
   VelocityModule:
-    enabled: 0
+    enabled: 1
     x:
       serializedVersion: 2
       minMaxState: 0
@@ -8500,7 +8500,7 @@ ParticleSystem:
     speedModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: -1.12
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -8779,7 +8779,7 @@ ParticleSystem:
       m_Bits: 4294967295
     influenceList: []
   ClampVelocityModule:
-    enabled: 0
+    enabled: 1
     x:
       serializedVersion: 2
       minMaxState: 0
@@ -8942,7 +8942,7 @@ ParticleSystem:
     magnitude:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.06
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -8994,7 +8994,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxis: 0
     inWorldSpace: 0
-    multiplyDragByParticleSize: 1
+    multiplyDragByParticleSize: 0
     multiplyDragByParticleVelocity: 1
     dampen: 0
     drag:
@@ -9051,7 +9051,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
   NoiseModule:
-    enabled: 0
+    enabled: 1
     strength:
       serializedVersion: 2
       minMaxState: 0
@@ -10307,7 +10307,7 @@ ParticleSystem:
     maxLights: 20
   TrailModule:
     enabled: 0
-    mode: 0
+    mode: 1
     ratio: 1
     lifetime:
       serializedVersion: 2
@@ -10376,13 +10376,13 @@ ParticleSystem:
     attachRibbonsToTransform: 0
     colorOverLifetime:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 1
       minColor: {r: 1, g: 1, b: 1, a: 1}
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 1}
+        key1: {r: 1, g: 1, b: 1, a: 0.0627451}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -10440,7 +10440,7 @@ ParticleSystem:
     widthOverTrail:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.1
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -11156,7 +11156,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -165.5, y: 64.04004}
-  m_SizeDelta: {x: 393, y: 74}
+  m_SizeDelta: {x: 347, y: 87}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1994651714
 MonoBehaviour:
@@ -11185,10 +11185,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: 459e8de8df1475447871e248dd3b7756,
+    m_HighlightedSprite: {fileID: 21300000, guid: ab8a5860d903a904a8ddb8eb05291b2b,
       type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: edd0cadab80ef0544838d9dfcbce7838, type: 3}
-    m_DisabledSprite: {fileID: 21300000, guid: 4c0024301df79aa47909f903afa0b2dc, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 874d8ae5bf3086345a8d76262453edab, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: 5e3145e9ab5132f4d8c3b12c31a31551, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -11232,7 +11232,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 4c0024301df79aa47909f903afa0b2dc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5e3145e9ab5132f4d8c3b12c31a31551, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11346,6 +11346,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4003533721291597151, guid: 8ec25f05c89f60649ab248edbc623854,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4003533720504886902, guid: 8ec25f05c89f60649ab248edbc623854,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11399,11 +11404,6 @@ PrefabInstance:
     - target: {fileID: 4003533720504886902, guid: 8ec25f05c89f60649ab248edbc623854,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4003533721291597151, guid: 8ec25f05c89f60649ab248edbc623854,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
